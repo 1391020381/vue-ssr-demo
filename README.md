@@ -2,7 +2,7 @@
  vue-ssr学习记录
 # 注意事项
  1. 在build用到 rm -rf 注意环境是windows,无此命令,需要全局安装rimraf,并修改build的命令
- 2. 在index.ssr.html中需要写<!--vue-ssr-outlet-->
+ 2. 在index.ssr.html中需要写`<!--vue-ssr-outlet-->`[使用一个页面模板](https://ssr.vuejs.org/zh/basic.html)注意 <!--vue-ssr-outlet--> 注释 -- 这里将是应用程序 HTML 标记注入的地方。
  3. 在 index.ssr.html中需要引入浏览器端的js文件(client.js)
  4. 在main.js中的是在每次请求后台时,都创建一个vue实例
  5. 在entry-server.js中判断哪些组件需要异步请求数据,以及在entry-client.js中操作
