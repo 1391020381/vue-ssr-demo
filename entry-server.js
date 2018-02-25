@@ -1,40 +1,28 @@
-/**
- *
- * const createApp = require('./main.js')
-
- module.exports = createApp
- *
- * **/
-
-
 // entry-server.js
-import Vue from 'vue'
-import App from './App.vue'
-import createStore from "./store";
+
+import createApp from './main'
 
 export default function (context) {
   // context 是  vue-server-render注入的参数
-  const store = createStore()
-  let app = new Vue({
-    store,
-    render: h => h(App)
-  })
 
-  // 找到所有 prefetchData 方法
-  let components = App.components
-  let prefecthFns = []
-  for (let key in components) {
-    if (!components.hasOwnProperty(key)) continue
-    let component = components[key]
-    if (component.asyncData) {
-      prefecthFns.push(component.asyncData({store}))
-    }
-  }
-  return Promise.all(prefecthFns).then(res => {
-    // 在所有组件的 Ajax都返回之后，才最终返回 app进行渲染
-    context.state = store.state
-    //  context.state 赋值成什么,window.__INITIAL_STATE__就是什么
-    return app
+  return new Promise((resolve, reject) => {
+    const {app, router, store} = createApp()
+    router.push(context.url)
+    router.onReady(() => {
+      const matchedComponents = router.getMatchedComponents()
+      if (!matchedComponents.length) {
+        return reject({code: 404})
+      }
+      // 对所有匹配的路由组件调用 asyncData()
+      Promise.all(matchedComponents.map(Component => {
+        if (Component.asyncData) {
+          return Component.asyncData({store})
+        }
+      })).then(() => {
+        context.state = store.state
+        resolve(app)
+      }).catch(reject)
+    }, reject)
   })
 }
 

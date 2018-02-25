@@ -3,9 +3,12 @@
     <h1>App.vue</h1>
     <p>vue with vue </p>
     <hr>
+    <router-link to="/Bar" tag="div">goBar</router-link>
+    <router-link to="/Foo" tag="div">goFoo</router-link>
     <foo ref="foo_ref"></foo>
     <bar1 ref="bar_ref"></bar1>
     <bar2 ref="bar_ref2"></bar2>
+    <router-view></router-view>
   </div>
 </template>
 <script>
