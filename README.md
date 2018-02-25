@@ -6,6 +6,10 @@
  3. 在 index.ssr.html中需要引入浏览器端的js文件(client.js)
  4. 在main.js中的是在每次请求后台时,都创建一个vue实例
  5. 在entry-server.js中判断哪些组件需要异步请求数据,以及在entry-client.js中操作
+ 
+ # 分支管理
+ 1. master分支是参照[Vue SSR Demo](https://github.com/youngwind/blog/issues/112)学习,无router。
+ 2. addRouter分支,[参照官网](https://ssr.vuejs.org/zh/structure.html)
  # 如何启动
  1. npm i
  2. npm run build
